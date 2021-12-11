@@ -1,0 +1,32 @@
+.Home-nav {
+ display: grid;
+ grid-template-columns: auto 50% 25%;
+ grid-template-areas: ". home leaderboard";
+ justify-items: center;
+ align-items: center;
+ padding: .5em;
+ background-color: var(--color-red);
+}
+
+.Home-nav-link {
+  text-decoration: none;
+  color: var(--color-white);
+}
+
+.Home-nav-link:first-child h1 {
+  font-size: 3em;
+  margin: 0;
+  font-family: 'Special Elite', cursive;
+}
+
+.Home-nav-link:first-child {
+  grid-area: home;
+}
+
+.Home-nav-link:last-child {
+  grid-area: leaderboard;
+}
+
+.Home-nav-link:last-child:hover {
+  text-shadow: 0px 0px 2px var(--color-red);
+}
