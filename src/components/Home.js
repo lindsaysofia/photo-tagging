@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import '../styles/Home.css';
 
-function Home() {
+function Home(props) {
+  const { gameImages } = props;
   return (
     <div className="Home">
       <nav className="Home-nav">
@@ -11,6 +12,10 @@ function Home() {
       </Link>
       <Link to="/leaderboard" className="Home-nav-link">Leaderboard</Link>
       </nav>
+      <img 
+        src={gameImages[0]}
+        alt=""
+      />
     </div>
   );
 }
