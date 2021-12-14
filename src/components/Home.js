@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import '../styles/Home.css';
+import GameTile from "./GameTile";
 
 function Home(props) {
   const { gameImages } = props;
@@ -12,10 +13,13 @@ function Home(props) {
       </Link>
       <Link to="/leaderboard" className="Home-nav-link">Leaderboard</Link>
       </nav>
-      <img 
-        src={gameImages[0]}
-        alt=""
-      />
+      <main>
+        {gameImages.map((imageSrc, index) => {
+          return (
+            <GameTile key={index} imageSrc={imageSrc} index={index} />
+          );
+        })}
+      </main>
     </div>
   );
 }
