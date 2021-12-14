@@ -8,7 +8,7 @@ import './App.css';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import firebaseConfig from './config';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,18 +22,34 @@ function App() {
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
 
-  const gameImageRef1 = ref(storage, 'game1.jpeg');
-  getDownloadURL(gameImageRef1)
-  .then((url) => {
-    setGameImages((prevGameImages) => {
-      const prevGameImagesCopy = prevGameImages.slice();
-      prevGameImagesCopy[0] = url;
-      return prevGameImagesCopy;
-    }); 
-  })
-  .catch((error) => {
-    console.log(error);
-  })
+  const getImage = (gameIndex) => {
+    const gameImageRef = ref(storage, `game${gameIndex + 1}.${gameIndex === 2 ? 'png': 'jpeg'}`);
+    getDownloadURL(gameImageRef)
+    .then((url) => {
+      setGameImages((prevGameImages) => {
+        const prevGameImagesCopy = prevGameImages.slice();
+        prevGameImagesCopy[gameIndex] = url;
+        return prevGameImagesCopy;
+      }); 
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
+  const getImages = () => {
+    for (let i = 0; i < 6; i++) {
+      getImage(i);
+    }
+  }
+
+  useEffect(() => {
+    getImages();
+  }, []);
+
+  
+
+  
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>

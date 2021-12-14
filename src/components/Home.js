@@ -13,7 +13,7 @@ function Home(props) {
       </Link>
       <Link to="/leaderboard" className="Home-nav-link">Leaderboard</Link>
       </nav>
-      <main>
+      <main className="Home-main">
         {gameImages.map((imageSrc, index) => {
           return (
             <GameTile key={index} imageSrc={imageSrc} index={index} />

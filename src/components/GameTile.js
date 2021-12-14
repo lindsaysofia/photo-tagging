@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import '../styles/GameTile.css';
 
 function GameTile(props) {
   const { imageSrc, index } = props;
