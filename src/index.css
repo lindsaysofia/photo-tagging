@@ -2,7 +2,8 @@
   --color-black: #0B0C10;
   --color-main: #B82601;
   --color-accent: blue;
-  --color-white: whitesmoke;
+  --color-white: white;
+  --color-tan: rgb(241, 240, 240);
 }
 
 body {

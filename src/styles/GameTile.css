@@ -1,22 +1,20 @@
 .GameTile {
-  height: 100%;
-  width: 100%;
-  border: 1px solid var(--color-main);
+  border: 1px solid var(--color-tan);
   text-decoration: none;
+  height: 300px;
+  width: 400px;
   display: grid;
   grid-template-rows: 80% 20%;
-  justify-items: center;
 }
 
 .GameTile-image {
-  height: 200px;
-  padding: 1em;
+  height: 100%;
+  width: 100%;
 }
 
 .GameTile-description {
-  justify-self: stretch;
-  background-color: var(--color-main);
-  color: var(--color-white);
+  background-color: var(--color-tan);
+  color: var(--color-main);
 }
 
 .GameTile-description h3 {

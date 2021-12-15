@@ -2,9 +2,6 @@
  min-height: 100vh;
  min-width: 100vw;
  max-width: 100vw;
- display: grid;
- grid-template-rows: 15% 85%;
-
 }
 
 .Home-nav {
@@ -14,14 +11,15 @@
  justify-items: center;
  align-items: center;
  padding: .5em;
- background-color: var(--color-main);
+ background-color: var(--color-white);
+ border: 1px solid var(--color-tan);
  position: sticky;
  top: 0;
 }
 
 .Home-nav-link {
   text-decoration: none;
-  color: var(--color-white);
+  color: var(--color-main);
 }
 
 .Home-nav-link:first-child h1 {
@@ -40,11 +38,9 @@
 
 .Home-main {
   box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1em;
   padding: 1em;
-  align-items: center;
-  grid-auto-flow: row;
 }

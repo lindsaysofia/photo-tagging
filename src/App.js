@@ -53,7 +53,7 @@ function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-          <Route path="/game" element={<Game />} />
+          <Route path="/game" element={<Game gameImages={gameImages} />} />
           <Route path="/" element={<Home gameImages={gameImages}/>} />
           <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
