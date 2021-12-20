@@ -17,19 +17,95 @@ import { useEffect, useState } from "react";
 // Initialize Firebase
 
 function App() {
-  const [gameImages, setGameImages] = useState(['', '', '', '', '', '']);
+  const  initialGameInfo = [
+    {
+      image: '',
+      characters: [
+        {
+          name: 'sasuke',
+          image: '',
+        },
+        {
+          name: 'waldo',
+          image: '',
+        },
+      ]
+    },
+    {
+      image: '',
+      characters: [
+        {
+          name: 'naruto',
+          image: '',
+        },
+        {
+          name: 'woody',
+          image: '',
+        },
+        {
+          name: 'ash',
+          image: '',
+        },
+      ]
+    },
+    {
+      image: '',
+      characters: [
+        {
+          name: 'pikachu',
+          image: '',
+        },
+      ]
+    },
+    {
+      image: '',
+      characters: [
+        {
+          name: 'nemo',
+          image: '',
+        },
+      ]
+    },
+    {
+      image: '',
+      characters: [
+        {
+          name: 'swordfish',
+          image: '',
+        },
+        {
+          name: 'pretzel',
+          image: '',
+        },
+        {
+          name: 'heart',
+          image: '',
+        },
+      ]
+    },
+    {
+      image: '',
+      characters: [
+        {
+          name: 'sonic',
+          image: '',
+        },
+      ]
+    },
+  ]
+  const [games, setGames] = useState(initialGameInfo);
 
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
 
-  const getImage = (gameIndex) => {
-    const gameImageRef = ref(storage, `game${gameIndex + 1}.${gameIndex === 2 ? 'png': 'jpeg'}`);
+  const getGameImage = (gameIndex) => {
+    const gameImageRef = ref(storage, `game${gameIndex + 1}.${gameIndex === 2 ? 'png': gameIndex === 3 ? 'webp' : 'jpeg'}`);
     getDownloadURL(gameImageRef)
     .then((url) => {
-      setGameImages((prevGameImages) => {
-        const prevGameImagesCopy = prevGameImages.slice();
-        prevGameImagesCopy[gameIndex] = url;
-        return prevGameImagesCopy;
+      setGames((prevGames) => {
+        const prevGamesCopy = prevGames.slice();
+        prevGamesCopy[gameIndex].image = url;
+        return prevGamesCopy;
       }); 
     })
     .catch((error) => {
@@ -37,14 +113,35 @@ function App() {
     })
   }
 
-  const getImages = () => {
-    for (let i = 0; i < 6; i++) {
-      getImage(i);
-    }
+  const getCharacterImages = (gameIndex) => {
+    games[gameIndex].characters.forEach((character, index) => {
+      const characterImageRef = ref(storage, `characters/${character.name}.png`);
+      getDownloadURL(characterImageRef)
+      .then((url) => {
+        setGames((prevGames) => {
+          const prevGamesCopy = prevGames.slice();
+          prevGamesCopy[gameIndex].characters[index].image = url;
+          return prevGamesCopy;
+        }); 
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    });
+    
   }
 
+  const getGames = () => {
+    games.forEach((game, index) => {
+      getGameImage(index);
+      getCharacterImages(index);
+    });
+  };
+
+  
+
   useEffect(() => {
-    getImages();
+    getGames();
   }, []);
 
   
@@ -53,8 +150,8 @@ function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-          <Route path="/game" element={<Game gameImages={gameImages} />} />
-          <Route path="/" element={<Home gameImages={gameImages}/>} />
+          <Route path="/game" element={<Game games={games} />} />
+          <Route path="/" element={<Home games={games} />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </BrowserRouter>

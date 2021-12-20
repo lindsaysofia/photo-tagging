@@ -3,7 +3,7 @@ import '../styles/Home.css';
 import GameTile from "./GameTile";
 
 function Home(props) {
-  const { gameImages } = props;
+  const { games } = props;
   return (
     <div className="Home">
       <nav className="Home-nav">
@@ -14,9 +14,9 @@ function Home(props) {
       <Link to="/leaderboard" className="Home-nav-link">Leaderboard</Link>
       </nav>
       <main className="Home-main">
-        {gameImages.map((imageSrc, index) => {
+        {games.map((game, index) => {
           return (
-            <GameTile key={index} imageSrc={imageSrc} index={index} />
+            <GameTile key={index} game={game} index={index} />
           );
         })}
       </main>

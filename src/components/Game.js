@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 function Game(props) {
-  const { gameImages } = props;
+  const { games } = props;
   return (
     <div className="Game">
       <nav className="Game-nav">
@@ -11,8 +11,9 @@ function Game(props) {
       </Link>
       <Link to="/leaderboard" className="Home-nav-link">Leaderboard</Link>
       </nav>
-      <main className="Nav-main">
-        
+      <main className="Nav-main" style={{background: 'black', height: '100vh'}}>
+        <img 
+        />
       </main>
     </div>
   );

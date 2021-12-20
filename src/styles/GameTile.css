@@ -15,8 +15,21 @@
 .GameTile-description {
   background-color: var(--color-tan);
   color: var(--color-main);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
 }
 
 .GameTile-description h3 {
   margin: 0;
+  justify-self: start;
+  display: flex;
+}
+
+.GameTile-characters {
+  justify-self: end;
+}
+
+.GameTile-character {
+  height: 50px;
 }
