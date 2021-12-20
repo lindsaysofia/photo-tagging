@@ -15,6 +15,7 @@
  border-bottom: 1px solid var(--color-tan);
  position: sticky;
  top: 0;
+ z-index: 10;
 }
 
 .Home-nav-link {
