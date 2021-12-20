@@ -1,0 +1,35 @@
+.Game {
+  min-height: 100vh;
+  min-width: 100vw;
+ }
+ 
+ .Game-nav {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  justify-items: center;
+  align-items: center;
+  padding: .5em;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-tan);
+  position: sticky;
+  top: 0;
+ }
+
+ .Game-character {
+  height: 75px;
+}
+ 
+ .Game-nav-link {
+   text-decoration: none;
+   color: var(--color-main);
+ }
+ 
+ .Game-nav-link:first-child h1 {
+   font-size: 3em;
+   margin: 0;
+   font-family: 'Special Elite', cursive;
+ }
+ 
+ .Game-image {
+   max-width: 90%;
+ }

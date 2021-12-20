@@ -5,7 +5,7 @@ function GameTile(props) {
   const { game, index } = props;
   
   return (
-    <Link to="/game" className="GameTile">
+    <Link to="/game" state={{ index: index }} className="GameTile">
       <img 
         src={game.image} 
         alt=""

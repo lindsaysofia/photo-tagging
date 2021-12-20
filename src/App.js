@@ -142,10 +142,10 @@ function App() {
 
   useEffect(() => {
     getGames();
+    return () => {
+      setGames(initialGameInfo);
+    };
   }, []);
-
-  
-
   
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
