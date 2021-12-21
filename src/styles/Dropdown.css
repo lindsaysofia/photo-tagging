@@ -2,7 +2,8 @@
   background-color: var(--color-white);
   position: absolute;
   margin: 0;
-  visibility: hidden;
+  top: -1000px;
+  left: -1000px;
 }
 
 .Dropdown-character {

@@ -28,6 +28,8 @@
 
 .GameTile-characters {
   justify-self: end;
+  display: flex;
+  
 }
 
 .GameTile-character {

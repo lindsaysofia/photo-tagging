@@ -9,16 +9,27 @@ function Game(props) {
   const { index } = location.state;
 
   const handleClick = (e) => {
-    const elementX = e.target.getBoundingClientRect().x;
-    const elementY = e.target.getBoundingClientRect().y;
-    const { clientX, clientY } = e;
-    const x = clientX - elementX;
-    const y = clientY - elementY;
+    const delta = 0;
+    const coordinates ={x: 0,  y: 0}
+    const {
+      height,
+      width,
+      top,
+      left,
+    } = e.target.getBoundingClientRect();
+    const {
+      pageX,
+      pageY,
+      clientX,
+      clientY,
+    } = e;
+    const imageX = clientX - left;
+    const imageY = clientY - top
     const dropdown = document.querySelector('.Dropdown');
-    console.log(dropdown);
-    dropdown.style.left = `${clientX + window.scrollX}px`;
-    dropdown.style.top = `${clientY + window.scrollY}px`;
-    dropdown.style.visibility = 'visible';
+    dropdown.style.left = `${pageX}px`;
+    dropdown.style.top = `${pageY}px`;
+    console.log(imageX <= coordinates.x + delta && imageX >= coordinates.x - delta && imageY <= coordinates.y + delta && imageY >= coordinates.y - delta);
+    console.log({imageX, imageY}, coordinates)
   };
 
   return (
