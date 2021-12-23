@@ -4,33 +4,9 @@ import '../styles/Game.css'
 import Dropdown from "./Dropdown";
 
 function Game(props) {
-  const { games } = props;
+  const { games, handleImageClick } = props;
   const location = useLocation();
   const { index } = location.state;
-
-  const handleClick = (e) => {
-    const delta = 0;
-    const coordinates ={x: 0,  y: 0}
-    const {
-      height,
-      width,
-      top,
-      left,
-    } = e.target.getBoundingClientRect();
-    const {
-      pageX,
-      pageY,
-      clientX,
-      clientY,
-    } = e;
-    const imageX = clientX - left;
-    const imageY = clientY - top
-    const dropdown = document.querySelector('.Dropdown');
-    dropdown.style.left = `${pageX}px`;
-    dropdown.style.top = `${pageY}px`;
-    console.log(imageX <= coordinates.x + delta && imageX >= coordinates.x - delta && imageY <= coordinates.y + delta && imageY >= coordinates.y - delta);
-    console.log({imageX, imageY}, coordinates)
-  };
 
   return (
     <div className="Game">
@@ -57,10 +33,11 @@ function Game(props) {
       </nav>
       <main className="Game-main">
         <img 
+          data-index={index}
           src={games[index].image}
           alt=""
           className="Game-image"
-          onClick={handleClick}
+          onClick={handleImageClick}
         />
         <Dropdown game={games[index]}/>
       </main>
