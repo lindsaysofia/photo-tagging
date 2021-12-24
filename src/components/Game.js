@@ -4,7 +4,7 @@ import '../styles/Game.css'
 import Dropdown from "./Dropdown";
 
 function Game(props) {
-  const { games, handleImageClick } = props;
+  const { games, handleImageClick, handleDropdownSelection } = props;
   const location = useLocation();
   const { index } = location.state;
 
@@ -32,14 +32,13 @@ function Game(props) {
         <Link to="/leaderboard" className="Game-nav-link">Leaderboard</Link>
       </nav>
       <main className="Game-main">
-        <img 
-          data-index={index}
+        <img
           src={games[index].image}
           alt=""
           className="Game-image"
           onClick={handleImageClick}
         />
-        <Dropdown game={games[index]}/>
+        <Dropdown index={index} game={games[index]} handleDropdownSelection={handleDropdownSelection}/>
       </main>
     </div>
   );

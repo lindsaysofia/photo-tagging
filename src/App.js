@@ -62,7 +62,7 @@ function App() {
       image: '',
       characters: [
         {
-          name: 'nemo',
+          name: 'waldo',
           image: '',
         },
       ]
@@ -95,6 +95,7 @@ function App() {
     },
   ]
   const [games, setGames] = useState(initialGameInfo);
+  const [location, setLocation] = useState({currentX: 0, currentY: 0});
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -102,7 +103,7 @@ function App() {
   const storage = getStorage(app);
 
   const getGameImage = (gameIndex) => {
-    const gameImageRef = ref(storage, `game${gameIndex + 1}.${gameIndex === 2 ? 'png': gameIndex === 3 ? 'webp' : 'jpeg'}`);
+    const gameImageRef = ref(storage, `game${gameIndex + 1}.${gameIndex === 2 ? 'png': 'jpeg'}`);
     getDownloadURL(gameImageRef)
     .then((url) => {
       setGames((prevGames) => {
@@ -167,41 +168,44 @@ function App() {
   }, []);
 
   const handleImageClick = (e) => {
-    const { index } = e.target.dataset;
-    console.log(index);
-    console.log(games[index]);
-    // const coordinates ={x: 7,  y: 70}
-    // const {
-    //   height,
-    //   width,
-    //   top,
-    //   left,
-    // } = e.target.getBoundingClientRect();
-    // const {
-    //   pageX,
-    //   pageY,
-    //   clientX,
-    //   clientY,
-    // } = e;
-    // const imageX = clientX - left;
-    // const imageY = clientY - top
-    // const dropdown = document.querySelector('.Dropdown');
-    // dropdown.style.left = `${pageX}px`;
-    // dropdown.style.top = `${pageY}px`;
-    // const percentageX = (imageX/width) * 100;
-    // const percentageY = (imageY/height) * 100;
-    // const deltaXMinus = Math.abs(percentageX - delta);
-    // const deltaXPlus = Math.abs(percentageX + delta);
-    // const deltaYMinus = Math.abs(percentageY - delta);
-    // const deltaYPlus = Math.abs(percentageY + delta);
-    // console.log(deltaYMinus <= coordinates.y && deltaYPlus >= coordinates.y && deltaXPlus >= coordinates.x && deltaXMinus <= coordinates.x);
-    // console.log({x: imageX/width, y: imageY/height})
+    const {
+      height,
+      width,
+      top,
+      left,
+    } = e.target.getBoundingClientRect();
+    const {
+      pageX,
+      pageY,
+      clientX,
+      clientY,
+    } = e;
+    const imageX = clientX - left;
+    const imageY = clientY - top;
+    const dropdown = document.querySelector('.Dropdown');
+    dropdown.style.left = `${pageX}px`;
+    dropdown.style.top = `${pageY}px`;
+    const percentageX = (imageX/width) * 100;
+    const percentageY = (imageY/height) * 100;
+    setLocation({currentX: percentageX, currentY: percentageY});
+    
+  };
+
+  const handleDropdownSelection = (e) => {
+    const { game: gameIndex, character: characterIndex} = e.target.dataset;
+    const { x, y, delta } = games[gameIndex].characters[characterIndex].location;
+    const {currentX, currentY } = location;
+    const deltaXMinus = Math.abs(currentX - delta);
+    const deltaXPlus = Math.abs(currentX + delta);
+    const deltaYMinus = Math.abs(currentY - delta);
+    const deltaYPlus = Math.abs(currentY + delta);
+    console.log(deltaYMinus <= y && deltaYPlus >= y && deltaXPlus >= x && deltaXMinus <= x);
   };
   
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick}/>} />
+          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection}/>} />
           <Route path="/" element={<Home games={games} />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
