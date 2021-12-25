@@ -96,6 +96,7 @@ function App() {
   ]
   const [games, setGames] = useState(initialGameInfo);
   const [location, setLocation] = useState({currentX: 0, currentY: 0});
+  const [charactersFound, setCharactersFound] = useState([]);
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -191,21 +192,42 @@ function App() {
     
   };
 
+  const gameOver = () => {
+    console.log('game over bro');
+  };
+
   const handleDropdownSelection = (e) => {
+    const dropdown = document.querySelector('.Dropdown');
+    dropdown.style.left = '-1000px';
+    dropdown.style.top = '-1000px';
     const { game: gameIndex, character: characterIndex} = e.target.dataset;
+    const { name } = games[gameIndex].characters[characterIndex];
+    if (charactersFound.includes(name)) {
+      return;
+    }
     const { x, y, delta } = games[gameIndex].characters[characterIndex].location;
     const {currentX, currentY } = location;
     const deltaXMinus = Math.abs(currentX - delta);
     const deltaXPlus = Math.abs(currentX + delta);
     const deltaYMinus = Math.abs(currentY - delta);
     const deltaYPlus = Math.abs(currentY + delta);
-    console.log(deltaYMinus <= y && deltaYPlus >= y && deltaXPlus >= x && deltaXMinus <= x);
+    const isFound = deltaYMinus <= y && deltaYPlus >= y && deltaXPlus >= x && deltaXMinus <= x;
+    if (isFound) {
+      let charactersFoundCopy = charactersFound.slice();
+      charactersFoundCopy.push(name);
+      console.log(charactersFoundCopy);
+      if (charactersFoundCopy.length === games[gameIndex].characters.length) {
+        gameOver();
+      } else {
+        setCharactersFound(charactersFoundCopy);
+      }
+    }
   };
   
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection}/>} />
+          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound}/>} />
           <Route path="/" element={<Home games={games} />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>

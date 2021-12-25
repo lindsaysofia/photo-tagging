@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import '../styles/Game.css'
 import Dropdown from "./Dropdown";
 
 function Game(props) {
-  const { games, handleImageClick, handleDropdownSelection } = props;
+  const { games, handleImageClick, handleDropdownSelection, charactersFound } = props;
   const location = useLocation();
   const { index } = location.state;
 
@@ -18,7 +17,7 @@ function Game(props) {
                   <img 
                     src={character.image}
                     alt={character.name}
-                    className="Game-character"
+                    className={`Game-character${charactersFound.includes(character.name) ? ' found' : ''}`}
                   />
                   <p className="Game-character-name">{character.name}</p>
                 </div>
