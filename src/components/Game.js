@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import '../styles/Game.css'
 import Dropdown from "./Dropdown";
+import Popup from "./Popup";
 
 function Game(props) {
   const { games, handleImageClick, handleDropdownSelection, charactersFound } = props;
@@ -9,6 +10,7 @@ function Game(props) {
 
   return (
     <div className="Game">
+      <Popup />
       <nav className="Game-nav">
         <div className="Game-characters">
           {games[index].characters.map((character, index) => {
