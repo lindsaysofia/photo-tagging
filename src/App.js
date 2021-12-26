@@ -101,6 +101,8 @@ function App() {
   const [location, setLocation] = useState({currentX: 0, currentY: 0});
   const [charactersFound, setCharactersFound] = useState([]);
   const [name, setName] = useState('');
+  const [startTime, setStartTime] = useState(0);
+  const [timeLapsed, setTimeLapsed] = useState(0);
   const badwordsArray = list.array;
   const badwordsFilter = new Filter();
   badwordsFilter.addWords(...badwordsArray);
@@ -200,15 +202,21 @@ function App() {
     
   };
 
+  const initiateGame = () => {
+    setStartTime(performance.now());
+  };
+
   const resetGame = () => {
     setCharactersFound([]);
     setName('');
   };
 
   const gameOver = () => {
+    const endTime = performance.now();
     const popup = document.querySelector('.Popup');
     popup.style.visibility = 'visible';
     resetGame();
+   setTimeLapsed((endTime - startTime)/1000);
   };
 
   const handleLeaderboardSubmission = (e) => {
@@ -279,8 +287,8 @@ function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound} handleLeaderboardSubmission={handleLeaderboardSubmission} handleNameChange={handleNameChange} name={name}/>} />
-          <Route path="/" element={<Home games={games} />} />
+          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound} handleLeaderboardSubmission={handleLeaderboardSubmission} handleNameChange={handleNameChange} name={name} timeLapsed={timeLapsed}/>} />
+          <Route path="/" element={<Home games={games} initiateGame={initiateGame} />} />
           <Route path="/leaderboard" element={<Leaderboard games={games} handleLeaderboardStats={handleLeaderboardStats} />} />
       </Routes>
     </BrowserRouter>

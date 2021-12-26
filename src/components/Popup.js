@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import '../styles/Popup.css'
 function Popup(props) {
-  const { handleLeaderboardSubmission, index, handleNameChange, name } = props;
+  const { handleLeaderboardSubmission, index, handleNameChange, name, timeLapsed } = props;
   return (
     <div className="Popup">
       <form className="Popup-form" onSubmit={handleLeaderboardSubmission}>
@@ -11,7 +11,7 @@ function Popup(props) {
         >
           X
         </Link>
-        <h2>You finished in X seconds!</h2>
+        <h2>You finished in {timeLapsed.toFixed(4)} seconds!</h2>
         <p>Submit your score on the global leaderboard!</p>
         <input 
           id="name"

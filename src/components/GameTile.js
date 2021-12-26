@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import '../styles/GameTile.css';
 
 function GameTile(props) {
-  const { game, index, parent } = props;
+  const { game, index, parent, initiateGame } = props;
   if (parent === 'home') {
     return (
-      <Link to="/game" state={{ index: index }} className="GameTile">
+      <Link to="/game" state={{ index: index }} className="GameTile" onClick={initiateGame}>
         <img 
           src={game.image} 
           alt=""
