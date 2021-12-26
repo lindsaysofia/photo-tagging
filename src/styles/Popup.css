@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  visibility: hidden;
 }
 
 .Popup-form {
@@ -33,6 +34,7 @@
   background-color: inherit;
   color: inherit;
   border: none;
+  text-decoration: none;
 }
 
 .form-submit,
@@ -41,6 +43,7 @@
   border: none;
   outline: none;
   padding: 1em;
+  text-decoration: none;
 }
 
 .form-buttons {
@@ -62,10 +65,4 @@
 .form-nosubmit {
   background-color: var(--color-tan);
   color: var(--color-main);
-}
-
-.form-close:hover,
-.form-submit,
-.form-nosubmit {
-  cursor: pointer;
 }

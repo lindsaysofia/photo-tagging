@@ -4,13 +4,13 @@ import Dropdown from "./Dropdown";
 import Popup from "./Popup";
 
 function Game(props) {
-  const { games, handleImageClick, handleDropdownSelection, charactersFound } = props;
+  const { games, handleImageClick, handleDropdownSelection, charactersFound, handleLeaderboardSubmission } = props;
   const location = useLocation();
   const { index } = location.state;
 
   return (
     <div className="Game">
-      <Popup />
+      <Popup handleLeaderboardSubmission={handleLeaderboardSubmission} index={index} />
       <nav className="Game-nav">
         <div className="Game-characters">
           {games[index].characters.map((character, index) => {

@@ -193,8 +193,14 @@ function App() {
   };
 
   const gameOver = () => {
-    console.log('game over bro');
+    const popup = document.querySelector('.Popup');
+    popup.style.visibility = 'visible';
+    setCharactersFound([]);
   };
+
+  const handleLeaderboardSubmission = (e) => {
+    console.log('hi');
+  }
 
   const handleDropdownSelection = (e) => {
     const dropdown = document.querySelector('.Dropdown');
@@ -227,7 +233,7 @@ function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound}/>} />
+          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound} handleLeaderboardSubmission={handleLeaderboardSubmission} />} />
           <Route path="/" element={<Home games={games} />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>

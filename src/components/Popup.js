@@ -1,10 +1,16 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import '../styles/Popup.css'
-function Popup() {
+function Popup(props) {
+  const { handleLeaderboardSubmission, index } = props;
   return (
     <div className="Popup">
       <form className="Popup-form">
-        <button className="form-close">X</button>
+        <Link 
+          className="form-close"
+          to="/"
+        >
+          X
+        </Link>
         <h2>You finished in X seconds!</h2>
         <p>Submit your score on the global leaderboard!</p>
         <input 
@@ -13,13 +19,22 @@ function Popup() {
           className="form-input"
         />
         <div className="form-buttons">
-          <button 
+          <Link 
+            to="/leaderboard"
+            state={{ index: index }}
             type="submit"
             className="form-submit"
+            data-index={index}
+            onClick={handleLeaderboardSubmission}
           >
             Submit Score
-          </button>
-          <button className="form-nosubmit">No, thanks</button>
+          </Link>
+          <Link 
+            to="/"
+            className="form-nosubmit"
+          >
+            No, thanks
+          </Link>
         </div>
       </form>
     </div>
