@@ -16,7 +16,7 @@ function Home(props) {
       <main className="Home-main">
         {games.map((game, index) => {
           return (
-            <GameTile key={index} game={game} index={index} />
+            <GameTile parent="home" key={index} game={game} index={index} />
           );
         })}
       </main>

@@ -11,7 +11,7 @@
 }
 
 .Popup-form {
-  min-width: 400px;
+  min-width: 300px;
   position: relative;
   background-color: var(--color-white);
   color: var(--color-main);

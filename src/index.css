@@ -17,6 +17,7 @@ body {
   background-color: var(--color-white);
   color: var(--color-black);
   box-sizing: border-box;
+   min-width: 300px;
 }
 
 code {

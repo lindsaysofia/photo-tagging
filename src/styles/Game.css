@@ -16,6 +16,12 @@
   top: 0;
 }
 
+@media only screen and (max-width: 400px) {
+  .Game-nav {
+    grid-template-columns: 1fr;
+  }
+}
+
 .Game-characters {
   width: 100%;
   display: flex;

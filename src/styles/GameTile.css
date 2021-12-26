@@ -7,6 +7,15 @@
   grid-template-rows: 80% 20%;
 }
 
+.GameTile.leaderboard {
+  height: 150px;
+  width: 150px;
+}
+
+.GameTile.leaderboard:hover {
+  cursor: pointer;
+}
+
 .GameTile-image {
   height: 100%;
   width: 100%;
@@ -18,6 +27,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+}
+
+.GameTile.leaderboard.active .GameTile-description {
+  background-color: var(--color-main);
+  color: var(--color-white);
 }
 
 .GameTile-description h3 {
@@ -34,4 +48,8 @@
 
 .GameTile-character {
   height: 50px;
+}
+
+.GameTile.leaderboard .GameTile-character {
+  height: 20px;
 }

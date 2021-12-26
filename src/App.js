@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Filter from "bad-words";
+import list from "badwords-list";
 import Game from "./components/Game";
 import Home from "./components/Home";
 import Leaderboard from "./components/Leaderboard";
@@ -10,6 +12,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import firebaseConfig from './config';
 import { useEffect, useState } from "react";
+import { length } from "badwords-list/lib/array";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -97,6 +100,11 @@ function App() {
   const [games, setGames] = useState(initialGameInfo);
   const [location, setLocation] = useState({currentX: 0, currentY: 0});
   const [charactersFound, setCharactersFound] = useState([]);
+  const [name, setName] = useState('');
+  const badwordsArray = list.array;
+  const badwordsFilter = new Filter();
+  badwordsFilter.addWords(...badwordsArray);
+
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -192,15 +200,53 @@ function App() {
     
   };
 
+  const resetGame = () => {
+    setCharactersFound([]);
+    setName('');
+  };
+
   const gameOver = () => {
     const popup = document.querySelector('.Popup');
     popup.style.visibility = 'visible';
-    setCharactersFound([]);
+    resetGame();
   };
 
   const handleLeaderboardSubmission = (e) => {
-    console.log('hi');
+    e.preventDefault();
+    const input = document.getElementById('name');
+    if (badwordsFilter.isProfane(name)) {
+      input.setCustomValidity('Oh no! Your name contains profanity. Please remove before proceeding.');
+    } else {
+      input.setCustomValidity('');
+    }
+    input.reportValidity();
+    const validityState = input.validity;
+    if (validityState.valid) {
+      console.log('valid name');
+    } else {
+      console.log('bad')
+    }
+
   }
+
+  const handleNameChange = (e) => {
+    let newName = e.target.value.trim();
+    setName(newName);
+  }
+
+  const handleLeaderboardStats = (e) => {
+    const {index} = e.target.dataset;
+    const gameTiles = Array.from(document.querySelectorAll('.GameTile.leaderboard'));
+    gameTiles.forEach((tile, tileIndex) => {
+      console.log(tile.classList, tileIndex, index);
+      // eslint-disable-next-line eqeqeq
+      if (tileIndex == index) {
+        tile.classList.add('active');
+      } else {
+        tile.classList.remove('active');
+      }
+    });
+  };
 
   const handleDropdownSelection = (e) => {
     const dropdown = document.querySelector('.Dropdown');
@@ -233,9 +279,9 @@ function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound} handleLeaderboardSubmission={handleLeaderboardSubmission} />} />
+          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound} handleLeaderboardSubmission={handleLeaderboardSubmission} handleNameChange={handleNameChange} name={name}/>} />
           <Route path="/" element={<Home games={games} />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/leaderboard" element={<Leaderboard games={games} handleLeaderboardStats={handleLeaderboardStats} />} />
       </Routes>
     </BrowserRouter>
   );
