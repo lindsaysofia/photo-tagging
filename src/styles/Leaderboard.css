@@ -53,4 +53,9 @@
   gap: 1em;
   grid-template-columns: repeat(4, 1fr);
   justify-items: start;
+  min-width: 500px;
+}
+
+.stat {
+  overflow-wrap: break-word;
 }
