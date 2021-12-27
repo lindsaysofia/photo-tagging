@@ -4,7 +4,10 @@ import '../styles/Leaderboard.css';
 
 function Leaderboard(props) {
   const statsHeader = ['Place', 'Player', 'Time (Seconds)', 'Date'];
-  const { games, handleLeaderboardStats, currentGameIndex, updateCurrentGameIndex } = props;
+  const { games, handleLeaderboardStats, currentGameIndex, updateCurrentGameIndex, stats, initiateGame } = props;
+  stats.sort((firstStat, secondStat) => {
+    return firstStat.time - secondStat.time;
+  });
   return (
     <div className="Leaderboard">
       <nav className="Leaderboard-nav">
@@ -21,10 +24,15 @@ function Leaderboard(props) {
             );
           })}
         </div>
-        <Link to="/game" className="Leaderboard-play">Play this Level</Link>
+        <Link to="/game" className="Leaderboard-play" onClick={() => {
+          initiateGame();
+        }}>Play this Level</Link>
         <div className="Leaderboard-stats">
           {statsHeader.map((header, headerIndex) => {
             return <h3 key={headerIndex} className="stats-header">{header}</h3>
+          })}
+          {stats.map((stat, statIndex) => {
+            return [<p className="stat">{statIndex + 1}</p>, <p className="stat">{stat.name}</p>, <p className="stat">{stat.time.toFixed(4)}</p>, <p className="stat">{stat.date.toDate().toDateString()}</p>]
           })}
         </div>
       </main>

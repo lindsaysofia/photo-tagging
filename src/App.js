@@ -103,6 +103,7 @@ function App() {
   const [startTime, setStartTime] = useState(0);
   const [timeLapsed, setTimeLapsed] = useState(0);
   const [currentGameIndex, setCurrentGameIndex] = useState(0);
+  const [stats, setStats] = useState([]);
   const navigate = useNavigate();
   const badwordsArray = list.array;
   const badwordsFilter = new Filter();
@@ -205,6 +206,7 @@ function App() {
 
   const initiateGame = () => {
     setStartTime(performance.now());
+    resetGame();
   };
 
   const resetGame = () => {
@@ -249,6 +251,7 @@ function App() {
       };
       addStat(newStat);
       navigate('/leaderboard');
+      updateStats(currentGameIndex);
     }
   }
 
@@ -257,21 +260,25 @@ function App() {
     setName(newName);
   }
 
-  async function handleLeaderboardStats(index) {
-    const gameTiles = Array.from(document.querySelectorAll('.GameTile.leaderboard'));
-    gameTiles[currentGameIndex].classList.remove('active');
-    gameTiles[index].classList.add('active');
+  async function updateStats(index) {
     try {
       const docRef = doc(db, `game${index + 1}`, "stats");
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data().stats);
+        setStats(docSnap.data().stats)
       }
       
     } catch(e) {
       console.error("Error adding document: ", e);
     }
+  }
+
+  async function handleLeaderboardStats(index) {
+    const gameTiles = Array.from(document.querySelectorAll('.GameTile.leaderboard'));
+    gameTiles[currentGameIndex].classList.remove('active');
+    gameTiles[index].classList.add('active');
+    updateStats(index);
   }
 
   const handleDropdownSelection = (e) => {
@@ -309,7 +316,7 @@ function App() {
     <Routes>
         <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound} handleLeaderboardSubmission={handleLeaderboardSubmission} handleNameChange={handleNameChange} name={name} timeLapsed={timeLapsed} updateCurrentGameIndex={updateCurrentGameIndex} currentGameIndex={currentGameIndex}/>} />
         <Route path="/" element={<Home games={games} initiateGame={initiateGame} updateCurrentGameIndex={updateCurrentGameIndex} />} />
-        <Route path="/leaderboard" element={<Leaderboard games={games} handleLeaderboardStats={handleLeaderboardStats} currentGameIndex={currentGameIndex} updateCurrentGameIndex={updateCurrentGameIndex} />} />
+        <Route path="/leaderboard" element={<Leaderboard games={games} handleLeaderboardStats={handleLeaderboardStats} currentGameIndex={currentGameIndex} updateCurrentGameIndex={updateCurrentGameIndex} stats={stats} initiateGame={initiateGame} />} />
     </Routes>
   );
 }
