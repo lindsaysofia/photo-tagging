@@ -2,10 +2,13 @@ import { Link } from "react-router-dom";
 import '../styles/GameTile.css';
 
 function GameTile(props) {
-  const { game, index, parent, initiateGame } = props;
+  const { game, index, parent, initiateGame, updateCurrentGameIndex } = props;
   if (parent === 'home') {
     return (
-      <Link to="/game" state={{ index: index }} className="GameTile" onClick={initiateGame}>
+      <Link to="/game" className="GameTile" onClick={() => {
+        initiateGame();
+        updateCurrentGameIndex(index);
+      }}>
         <img 
           src={game.image} 
           alt=""
@@ -31,16 +34,18 @@ function GameTile(props) {
   }
   const { active, handleLeaderboardStats } = props;
   return (
-    <div data-index={index} onClick={handleLeaderboardStats} className={`GameTile leaderboard${active? ' active' : ''}`}>
+    <div onClick={() => {
+      handleLeaderboardStats(index);
+      updateCurrentGameIndex(index);
+    }} className={`GameTile leaderboard${active? ' active' : ''}`}>
       <img 
         src={game.image} 
         alt=""
         className="GameTile-image"
-        data-index={index}
       />
-      <div className="GameTile-description" data-index={index}>
-        <h3 data-index={index}>Game {index + 1}</h3>
-        <div className="GameTile-characters" data-index={index}>
+      <div className="GameTile-description">
+        <h3>Game {index + 1}</h3>
+        <div className="GameTile-characters">
           {game.characters.map((character, characterIndex) => {
             return (
               <img 
@@ -48,7 +53,6 @@ function GameTile(props) {
                 src={character.image}
                 alt={character.name}
                 className="GameTile-character"
-                data-index={index}
               />
             );
           })}

@@ -27,8 +27,28 @@
  .Leaderboard-main {
    box-sizing: border-box;
    display: flex;
-   flex-wrap: wrap;
+   flex-direction: column;
    justify-content: center;
+   align-items: center;
    gap: 1em;
    padding: 1em;
  }
+
+ .Leaderboard-games {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1em;
+}
+
+.Leaderboard-play {
+  text-decoration: none;
+  background-color: var(--color-main);
+  color: var(--color-white);
+  padding: 1em;
+}
+
+.Leaderboard-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}

@@ -1,14 +1,10 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import GameTile from "./GameTile";
 import '../styles/Leaderboard.css';
 
 function Leaderboard(props) {
-  const { games, handleLeaderboardStats } = props;
-  const location = useLocation();
-  let index = 0;
-  if (location.state) {
-    index = location.state.index;
-  }
+  const statsHeader = ['Place', 'Player', 'Time (Seconds)', 'Date'];
+  const { games, handleLeaderboardStats, currentGameIndex, updateCurrentGameIndex } = props;
   return (
     <div className="Leaderboard">
       <nav className="Leaderboard-nav">
@@ -18,13 +14,18 @@ function Leaderboard(props) {
         </Link>
       </nav>
       <main className="Leaderboard-main">
-        {games.map((game, gameIndex) => {
-          return (
-            <GameTile parent="leaderboard" key={gameIndex} game={game} index={gameIndex} active={gameIndex === index} handleLeaderboardStats={handleLeaderboardStats}/>
-          );
-        })}
+        <div className="Leaderboard-games">
+          {games.map((game, gameIndex) => {
+            return (
+              <GameTile parent="leaderboard" key={gameIndex} game={game} index={gameIndex} active={gameIndex === currentGameIndex} handleLeaderboardStats={handleLeaderboardStats} updateCurrentGameIndex={updateCurrentGameIndex}/>
+            );
+          })}
+        </div>
+        <Link to="/game" className="Leaderboard-play">Play this Level</Link>
         <div className="Leaderboard-stats">
-
+          {statsHeader.map((header, headerIndex) => {
+            return <h3 key={headerIndex} className="stats-header">{header}</h3>
+          })}
         </div>
       </main>
     </div>

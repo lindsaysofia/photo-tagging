@@ -1,19 +1,17 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import '../styles/Game.css'
 import Dropdown from "./Dropdown";
 import Popup from "./Popup";
 
 function Game(props) {
-  const { games, handleImageClick, handleDropdownSelection, charactersFound, handleLeaderboardSubmission, handleNameChange, name, timeLapsed } = props;
-  const location = useLocation();
-  const { index } = location.state;
+  const { games, handleImageClick, handleDropdownSelection, charactersFound, handleLeaderboardSubmission, handleNameChange, name, timeLapsed, updateCurrentGameIndex, currentGameIndex } = props;
 
   return (
     <div className="Game">
-      <Popup handleLeaderboardSubmission={handleLeaderboardSubmission} index={index} handleNameChange={handleNameChange} name={name} timeLapsed={timeLapsed} />
+      <Popup handleLeaderboardSubmission={handleLeaderboardSubmission} index={currentGameIndex} handleNameChange={handleNameChange} name={name} timeLapsed={timeLapsed} />
       <nav className="Game-nav">
         <div className="Game-characters">
-          {games[index].characters.map((character, index) => {
+          {games[currentGameIndex].characters.map((character, index) => {
               return (
                 <div key={index}>
                   <img 
@@ -34,12 +32,12 @@ function Game(props) {
       </nav>
       <main className="Game-main">
         <img
-          src={games[index].image}
+          src={games[currentGameIndex].image}
           alt=""
           className="Game-image"
           onClick={handleImageClick}
         />
-        <Dropdown index={index} game={games[index]} handleDropdownSelection={handleDropdownSelection}/>
+        <Dropdown index={currentGameIndex} game={games[currentGameIndex]} handleDropdownSelection={handleDropdownSelection}/>
       </main>
     </div>
   );

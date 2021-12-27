@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Filter from "bad-words";
 import list from "badwords-list";
 import Game from "./components/Game";
@@ -9,10 +9,9 @@ import './App.css';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, updateDoc, arrayUnion, Timestamp} from "firebase/firestore";
 import firebaseConfig from './config';
 import { useEffect, useState } from "react";
-import { length } from "badwords-list/lib/array";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -103,6 +102,8 @@ function App() {
   const [name, setName] = useState('');
   const [startTime, setStartTime] = useState(0);
   const [timeLapsed, setTimeLapsed] = useState(0);
+  const [currentGameIndex, setCurrentGameIndex] = useState(0);
+  const navigate = useNavigate();
   const badwordsArray = list.array;
   const badwordsFilter = new Filter();
   badwordsFilter.addWords(...badwordsArray);
@@ -219,6 +220,17 @@ function App() {
    setTimeLapsed((endTime - startTime)/1000);
   };
 
+  async function addStat(newStat) {
+    try {
+      const statsRef = doc(db, `game${currentGameIndex + 1}`, "stats");
+      await updateDoc(statsRef, {
+        stats: arrayUnion(newStat)
+      });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
   const handleLeaderboardSubmission = (e) => {
     e.preventDefault();
     const input = document.getElementById('name');
@@ -230,11 +242,14 @@ function App() {
     input.reportValidity();
     const validityState = input.validity;
     if (validityState.valid) {
-      console.log('valid name');
-    } else {
-      console.log('bad')
+      const newStat = {
+        name,
+        time: timeLapsed,
+        date: Timestamp.fromDate(new Date()),
+      };
+      addStat(newStat);
+      navigate('/leaderboard');
     }
-
   }
 
   const handleNameChange = (e) => {
@@ -242,19 +257,22 @@ function App() {
     setName(newName);
   }
 
-  const handleLeaderboardStats = (e) => {
-    const {index} = e.target.dataset;
+  async function handleLeaderboardStats(index) {
     const gameTiles = Array.from(document.querySelectorAll('.GameTile.leaderboard'));
-    gameTiles.forEach((tile, tileIndex) => {
-      console.log(tile.classList, tileIndex, index);
-      // eslint-disable-next-line eqeqeq
-      if (tileIndex == index) {
-        tile.classList.add('active');
-      } else {
-        tile.classList.remove('active');
+    gameTiles[currentGameIndex].classList.remove('active');
+    gameTiles[index].classList.add('active');
+    try {
+      const docRef = doc(db, `game${index + 1}`, "stats");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data().stats);
       }
-    });
-  };
+      
+    } catch(e) {
+      console.error("Error adding document: ", e);
+    }
+  }
 
   const handleDropdownSelection = (e) => {
     const dropdown = document.querySelector('.Dropdown');
@@ -275,7 +293,6 @@ function App() {
     if (isFound) {
       let charactersFoundCopy = charactersFound.slice();
       charactersFoundCopy.push(name);
-      console.log(charactersFoundCopy);
       if (charactersFoundCopy.length === games[gameIndex].characters.length) {
         gameOver();
       } else {
@@ -283,15 +300,17 @@ function App() {
       }
     }
   };
+
+  const updateCurrentGameIndex = (newIndex) => {
+    setCurrentGameIndex(newIndex);
+  };
   
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <Routes>
-          <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound} handleLeaderboardSubmission={handleLeaderboardSubmission} handleNameChange={handleNameChange} name={name} timeLapsed={timeLapsed}/>} />
-          <Route path="/" element={<Home games={games} initiateGame={initiateGame} />} />
-          <Route path="/leaderboard" element={<Leaderboard games={games} handleLeaderboardStats={handleLeaderboardStats} />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+        <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound} handleLeaderboardSubmission={handleLeaderboardSubmission} handleNameChange={handleNameChange} name={name} timeLapsed={timeLapsed} updateCurrentGameIndex={updateCurrentGameIndex} currentGameIndex={currentGameIndex}/>} />
+        <Route path="/" element={<Home games={games} initiateGame={initiateGame} updateCurrentGameIndex={updateCurrentGameIndex} />} />
+        <Route path="/leaderboard" element={<Leaderboard games={games} handleLeaderboardStats={handleLeaderboardStats} currentGameIndex={currentGameIndex} updateCurrentGameIndex={updateCurrentGameIndex} />} />
+    </Routes>
   );
 }
 
