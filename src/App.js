@@ -180,6 +180,10 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    updateStats(currentGameIndex);
+  }, [currentGameIndex]);
+
   const handleImageClick = (e) => {
     const {
       height,
@@ -279,7 +283,6 @@ function App() {
     const gameTiles = Array.from(document.querySelectorAll('.GameTile.leaderboard'));
     gameTiles[currentGameIndex].classList.remove('active');
     gameTiles[index].classList.add('active');
-    updateStats(index);
   }
 
   const handleDropdownSelection = (e) => {
