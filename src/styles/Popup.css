@@ -25,6 +25,18 @@
   box-sizing: border-box;
 }
 
+@media only screen and (max-width: 400px) {
+  .Popup {
+    align-items: flex-start;
+    min-width: 250px;
+  }
+
+  .Popup-form {
+    width: 80%;
+    height: 50%;
+  }
+}
+
 .form-close {
   position: absolute;
   right: 0;
