@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/photo-tagging/static/css/main.eb43c1b6.chunk.css",
+    "main.css": "/photo-tagging/static/css/main.0dbed874.chunk.css",
     "main.js": "/photo-tagging/static/js/main.70d74c9a.chunk.js",
     "main.js.map": "/photo-tagging/static/js/main.70d74c9a.chunk.js.map",
     "runtime-main.js": "/photo-tagging/static/js/runtime-main.f2c434ad.js",
@@ -10,13 +10,13 @@
     "static/js/3.b7c2f5a2.chunk.js": "/photo-tagging/static/js/3.b7c2f5a2.chunk.js",
     "static/js/3.b7c2f5a2.chunk.js.map": "/photo-tagging/static/js/3.b7c2f5a2.chunk.js.map",
     "index.html": "/photo-tagging/index.html",
-    "static/css/main.eb43c1b6.chunk.css.map": "/photo-tagging/static/css/main.eb43c1b6.chunk.css.map",
+    "static/css/main.0dbed874.chunk.css.map": "/photo-tagging/static/css/main.0dbed874.chunk.css.map",
     "static/js/2.4e5b2d31.chunk.js.LICENSE.txt": "/photo-tagging/static/js/2.4e5b2d31.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f2c434ad.js",
     "static/js/2.4e5b2d31.chunk.js",
-    "static/css/main.eb43c1b6.chunk.css",
+    "static/css/main.0dbed874.chunk.css",
     "static/js/main.70d74c9a.chunk.js"
   ]
 }
