@@ -261,6 +261,7 @@ function App() {
   }
 
   async function updateStats(index) {
+    index = index || 0;
     try {
       const docRef = doc(db, `game${index + 1}`, "stats");
       const docSnap = await getDoc(docRef);
@@ -315,7 +316,7 @@ function App() {
   return (
     <Routes>
         <Route path="/game" element={<Game games={games} handleImageClick={handleImageClick} handleDropdownSelection={handleDropdownSelection} charactersFound={charactersFound} handleLeaderboardSubmission={handleLeaderboardSubmission} handleNameChange={handleNameChange} name={name} timeLapsed={timeLapsed} updateCurrentGameIndex={updateCurrentGameIndex} currentGameIndex={currentGameIndex}/>} />
-        <Route path="/" element={<Home games={games} initiateGame={initiateGame} updateCurrentGameIndex={updateCurrentGameIndex} />} />
+        <Route path="/" element={<Home games={games} initiateGame={initiateGame} updateCurrentGameIndex={updateCurrentGameIndex} updateStats={updateStats}/>} />
         <Route path="/leaderboard" element={<Leaderboard games={games} handleLeaderboardStats={handleLeaderboardStats} currentGameIndex={currentGameIndex} updateCurrentGameIndex={updateCurrentGameIndex} stats={stats} initiateGame={initiateGame} />} />
     </Routes>
   );

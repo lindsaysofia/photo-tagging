@@ -35,7 +35,7 @@
 }
 
 .Game-character.found {
-  opacity: 50%;
+  opacity: 25%;
 }
 
 .Game-character-name {

@@ -32,7 +32,7 @@ function Leaderboard(props) {
             return <h3 key={headerIndex} className="stats-header">{header}</h3>
           })}
           {stats.map((stat, statIndex) => {
-            return [<p className="stat">{statIndex + 1}</p>, <p className="stat">{stat.name}</p>, <p className="stat">{stat.time.toFixed(4)}</p>, <p className="stat">{stat.date.toDate().toDateString()}</p>]
+            return [<p key={`${statIndex}1`} className="stat">{statIndex + 1}</p>, <p key={`${statIndex}2`} className="stat">{stat.name}</p>, <p key={`${statIndex}3`} className="stat">{stat.time.toFixed(4)}</p>, <p key={`${statIndex}4`} className="stat">{stat.date.toDate().toDateString()}</p>]
           })}
         </div>
       </main>

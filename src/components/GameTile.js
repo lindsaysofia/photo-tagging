@@ -42,10 +42,23 @@ function GameTile(props) {
         src={game.image} 
         alt=""
         className="GameTile-image"
+        onClick={() => {
+          handleLeaderboardStats(index);
+          updateCurrentGameIndex(index);
+        }}
       />
-      <div className="GameTile-description">
-        <h3>Game {index + 1}</h3>
-        <div className="GameTile-characters">
+      <div onClick={() => {
+      handleLeaderboardStats(index);
+      updateCurrentGameIndex(index);
+    }} className="GameTile-description">
+        <h3 onClick={() => {
+      handleLeaderboardStats(index);
+      updateCurrentGameIndex(index);
+    }}>Game {index + 1}</h3>
+        <div onClick={() => {
+      handleLeaderboardStats(index);
+      updateCurrentGameIndex(index);
+    }} className="GameTile-characters">
           {game.characters.map((character, characterIndex) => {
             return (
               <img 
@@ -53,6 +66,10 @@ function GameTile(props) {
                 src={character.image}
                 alt={character.name}
                 className="GameTile-character"
+                onClick={() => {
+                  handleLeaderboardStats(index);
+                  updateCurrentGameIndex(index);
+                }}
               />
             );
           })}

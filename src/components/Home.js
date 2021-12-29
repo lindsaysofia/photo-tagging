@@ -3,7 +3,7 @@ import '../styles/Home.css';
 import GameTile from "./GameTile";
 
 function Home(props) {
-  const { games, initiateGame, updateCurrentGameIndex } = props;
+  const { games, initiateGame, updateCurrentGameIndex, updateStats } = props;
   return (
     <div className="Home">
       <nav className="Home-nav">
@@ -11,7 +11,7 @@ function Home(props) {
           <h1><i className="fas fa-search"></i> iSpy</h1>
           <p>Find the hidden characters!</p>
         </Link>
-        <Link to="/leaderboard" className="Home-nav-link">Leaderboard</Link>
+        <Link to="/leaderboard" className="Home-nav-link" onClick={updateStats}>Leaderboard</Link>
       </nav>
       <main className="Home-main">
         {games.map((game, index) => {
