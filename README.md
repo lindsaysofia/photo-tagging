@@ -1,4 +1,8 @@
-From The Odin Project
+# iSpy with my Little Eyes...
+
+As part of The Odin Project curriculum, I created various games where users can find different characters. Upon completion of each game, users can submit their name and time to the global leaderboard. This project used Firebase fand React. Tons of fun to create.
+
+Can you find Waldo?: https://lindsaysofia.github.io/photo-tagging/
 
 Images from:
 Game 1: https://i.redd.it/z90c089eyyu61.jpg
